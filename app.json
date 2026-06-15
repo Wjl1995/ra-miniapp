@@ -7,21 +7,24 @@
     "pages/me/me"
   ],
   "window": {
-    "navigationBarTitleText": "RA MiniApp"
+    "navigationBarTitleText": "RA MiniApp",
+    "backgroundColor": "#f7f8fa",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTextStyle": "black"
   },
   "tabBar": {
     "list": [
       {
         "pagePath": "pages/index/index",
-        "text": "首页"
+        "text": "Home"
       },
       {
         "pagePath": "pages/knowledge/knowledge",
-        "text": "知识库"
+        "text": "Docs"
       },
       {
         "pagePath": "pages/me/me",
-        "text": "我的"
+        "text": "Me"
       }
     ]
   }

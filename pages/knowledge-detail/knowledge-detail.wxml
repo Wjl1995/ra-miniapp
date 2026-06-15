@@ -1,1 +1,11 @@
-<view>文档详情</view>
+<view class="page">
+  <view class="card" wx:if="{{document}}">
+    <view class="title">{{document.title}}</view>
+    <view class="muted">Domain: {{document.domain}}</view>
+    <view style="margin-top: 24rpx;">{{document.summary || 'No summary yet.'}}</view>
+    <button bindtap="askFromDocument" style="margin-top: 24rpx;">Ask with this document</button>
+  </view>
+  <view class="card" wx:elif="{{error}}">
+    <view style="color:#b91c1c;">{{error}}</view>
+  </view>
+</view>

@@ -1,1 +1,23 @@
-<view>对话页</view>
+<view class="page">
+  <view class="card">
+    <view class="title">Chat</view>
+    <view wx:if="{{error}}" style="color:#b91c1c; margin-bottom: 16rpx;">{{error}}</view>
+    <block wx:for="{{messages}}" wx:key="id">
+      <view style="margin-bottom: 16rpx;">
+        <view style="font-weight:600;">{{item.role}}</view>
+        <view style="margin-top: 8rpx;">{{item.content}}</view>
+      </view>
+    </block>
+    <view wx:if="{{!messages.length}}" class="muted">No messages yet.</view>
+  </view>
+
+  <view class="card" style="margin-top: 24rpx;">
+    <textarea
+      value="{{input}}"
+      bindinput="onInput"
+      placeholder="Type a message"
+      style="width:100%; min-height: 160rpx;"
+    />
+    <button bindtap="submitMessage" loading="{{loading}}" style="margin-top: 16rpx;">Send</button>
+  </view>
+</view>

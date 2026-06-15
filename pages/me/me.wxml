@@ -1,1 +1,12 @@
-<view>我的</view>
+<view class="page">
+  <view class="card">
+    <view class="title">Profile</view>
+    <view wx:if="{{user}}">
+      <view>ID: {{user.id}}</view>
+      <view>Nickname: {{user.nickname || '-'}}</view>
+      <view>Quota: {{user.quota.used}} / {{user.quota.total}}</view>
+    </view>
+    <view wx:elif="{{error}}" style="color:#b91c1c;">{{error}}</view>
+    <view wx:else class="muted">Not signed in.</view>
+  </view>
+</view>

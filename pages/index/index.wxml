@@ -1,1 +1,19 @@
-<view>首页</view>
+<view class="page">
+  <view class="card">
+    <view class="title">ReActAgent MiniApp</view>
+    <view class="muted">Frontend scaffold wired to the backend contract.</view>
+    <button wx:if="{{!user}}" bindtap="handleLogin" style="margin-top: 24rpx;">WeChat Login</button>
+    <view wx:else style="margin-top: 24rpx;">Signed in as {{user.nickname || ('User #' + user.id)}}</view>
+    <view wx:if="{{error}}" style="color:#b91c1c; margin-top: 16rpx;">{{error}}</view>
+  </view>
+
+  <view class="card" style="margin-top: 24rpx;">
+    <view class="title">Suggested Questions</view>
+    <block wx:for="{{suggestions}}" wx:key="*this">
+      <view style="padding: 16rpx 0; border-top: 1rpx solid #e5e7eb;" data-question="{{item}}" bindtap="goChat">
+        {{item}}
+      </view>
+    </block>
+    <view wx:if="{{!suggestions.length}}" class="muted">No suggestions loaded.</view>
+  </view>
+</view>
