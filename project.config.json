@@ -2,20 +2,17 @@
   "miniprogramRoot": "./",
   "projectname": "ra-miniapp",
   "description": "ReActAgent mini program",
+  "appid": "touristappid",
+  "compileType": "miniprogram",
   "setting": {
     "urlCheck": false,
     "es6": false,
     "postcss": false,
-    "compileWorklet": false,
     "minified": false,
-    "uglifyFileName": false,
-    "uploadWithSourceMap": true,
     "enhance": false,
     "packNpmManually": false,
-    "packNpmRelationList": [],
     "minifyWXSS": true,
     "minifyWXML": true,
-    "localPlugins": false,
     "disableUseStrict": false,
     "useCompilerPlugins": false,
     "condition": false,
@@ -27,12 +24,10 @@
       "outputPath": ""
     }
   },
-  "appid": "touristappid",
-  "compileType": "miniprogram",
-  "simulatorPluginLibVersion": {},
   "packOptions": {
     "ignore": [],
     "include": []
   },
+  "simulatorPluginLibVersion": {},
   "editorSetting": {}
 }
