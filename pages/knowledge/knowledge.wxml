@@ -1,13 +1,37 @@
 <view class="page">
   <view class="card">
-    <view class="title">Documents</view>
+    <view class="header-row">
+      <view class="title title-no-margin">Documents</view>
+      <button class="upload-btn" bindtap="chooseAndUpload" loading="{{uploading}}" disabled="{{uploading}}">
+        {{uploading ? 'Uploading' : 'Upload'}}
+      </button>
+    </view>
+    <view class="toolbar">
+      <input
+        class="search-input"
+        placeholder="Search by file name, domain, or summary"
+        value="{{keyword}}"
+        bindinput="onKeywordInput"
+      />
+      <view wx:if="{{keyword}}" class="clear-text" bindtap="clearKeyword">Clear</view>
+    </view>
+    <view wx:if="{{uploadHint}}" class="hint">{{uploadHint}}</view>
     <view wx:if="{{error}}" style="color:#b91c1c; margin-bottom: 16rpx;">{{error}}</view>
-    <block wx:for="{{documents}}" wx:key="id">
-      <view data-id="{{item.id}}" bindtap="openDetail" style="padding: 16rpx 0; border-top: 1rpx solid #e5e7eb;">
-        <view>{{item.title}}</view>
-        <view class="muted">{{item.domain}} | {{item.status}}</view>
+    <block wx:for="{{filteredDocuments}}" wx:key="id">
+      <view data-id="{{item.id}}" bindtap="openDetail" class="doc-item">
+        <view class="doc-title-row">
+          <view class="doc-title">{{item.title}}</view>
+          <view class="status-pill status-{{item.status}}">{{item.status}}</view>
+        </view>
+        <view class="meta-row">
+          <view class="muted">{{item.domain}}</view>
+          <view class="muted">{{item.chunk_count}} chunks</view>
+          <view class="muted">{{item.size}} bytes</view>
+        </view>
+        <view wx:if="{{item.summary}}" class="doc-summary">{{item.summary}}</view>
       </view>
     </block>
+    <view wx:if="{{documents.length && !filteredDocuments.length}}" class="muted">No documents match your search.</view>
     <view wx:if="{{!documents.length}}" class="muted">No documents yet.</view>
   </view>
 </view>
