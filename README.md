@@ -19,7 +19,7 @@ This repository now contains a mini program scaffold wired to the backend API co
 - `services/` wraps backend API calls
 - `pages/` contain minimal page-level data flow
 
-Before real-device use, update `config/env.js` to your backend host and import the project into WeChat DevTools.
+Before real-device use, update `config/env.js` to your backend host and set your own mini program AppID in local DevTools config such as `project.private.config.json` or your local copy of `project.config.json`.
 
 ## Reusable Smoke Tests
 
