@@ -1,11 +1,45 @@
 <view class="page">
   <view class="card">
-    <view class="title">Chat</view>
+    <view class="header-row">
+      <view class="title title-no-margin">Chat</view>
+      <view style="display:flex; gap:12rpx;">
+        <button bindtap="manageSessions">Sessions</button>
+        <button bindtap="startNewSession">New Chat</button>
+      </view>
+    </view>
+    <view wx:if="{{sessions.length}}" style="margin-bottom: 24rpx;">
+      <view class="muted" style="margin-bottom: 12rpx;">Recent sessions</view>
+      <scroll-view scroll-x="true" style="white-space: nowrap;">
+        <block wx:for="{{sessions}}" wx:key="id">
+          <view
+            data-id="{{item.id}}"
+            bindtap="switchSession"
+            style="display:inline-block; padding: 12rpx 18rpx; margin-right: 12rpx; border-radius: 999rpx; background: {{item.id === sessionId ? '#111827' : '#e5e7eb'}}; color: {{item.id === sessionId ? '#ffffff' : '#374151'}};"
+          >
+            {{item.title}}
+          </view>
+        </block>
+      </scroll-view>
+    </view>
     <view wx:if="{{error}}" style="color:#b91c1c; margin-bottom: 16rpx;">{{error}}</view>
     <block wx:for="{{messages}}" wx:key="id">
-      <view style="margin-bottom: 16rpx;">
+      <view style="margin-bottom: 24rpx;">
         <view style="font-weight:600;">{{item.role}}</view>
-        <view style="margin-top: 8rpx;">{{item.content}}</view>
+        <view style="margin-top: 8rpx; white-space: pre-wrap;">{{item.content}}</view>
+        <view wx:if="{{item.refs && item.refs.length}}" style="margin-top: 12rpx;">
+          <view class="muted" style="margin-bottom: 8rpx;">References</view>
+          <block wx:for="{{item.refs}}" wx:key="document_id" wx:for-item="ref">
+            <view class="ref-card" data-document-id="{{ref.document_id}}" bindtap="openRefDocument">
+              <view style="font-weight:500;">{{ref.title}}</view>
+              <view class="muted">Doc #{{ref.document_id}} · Score {{ref.score}}</view>
+              <view class="muted">{{ref.snippet}}</view>
+              <view class="ref-link">Open document</view>
+            </view>
+          </block>
+        </view>
+        <view wx:if="{{item.tool_traces && item.tool_traces.length}}" style="margin-top: 12rpx;">
+          <view class="muted">Tool traces: {{item.tool_traces.length}}</view>
+        </view>
       </view>
     </block>
     <view wx:if="{{!messages.length}}" class="muted">No messages yet.</view>

@@ -8,6 +8,9 @@ Page({
     uploading: false,
     uploadHint: '',
     keyword: '',
+    uploadTitle: '',
+    uploadDomain: 'general',
+    uploadTags: '',
   },
 
   async onShow() {
@@ -16,9 +19,11 @@ Page({
 
   async loadDocuments() {
     try {
-      const documents = await listDocuments();
+      const documents = await listDocuments({
+        keyword: this.data.keyword,
+      });
       this.setData({ documents, error: '' });
-      this.applyFilters(documents, this.data.keyword);
+      this.setData({ filteredDocuments: documents });
     } catch (err) {
       this.setData({ error: 'Failed to load documents.' });
     }
@@ -52,14 +57,17 @@ Page({
 
       await uploadDocument({
         filePath: file.path,
-        name: file.name || 'document',
-        domain: 'general',
-        tags: '',
+        name: this.data.uploadTitle || file.name || 'document',
+        domain: this.data.uploadDomain || 'general',
+        tags: this.data.uploadTags || '',
       });
 
       this.setData({
         uploading: false,
         uploadHint: `Upload completed: ${file.name || 'document'}`,
+        uploadTitle: '',
+        uploadDomain: 'general',
+        uploadTags: '',
       });
       await this.loadDocuments();
     } catch (err) {
@@ -104,23 +112,24 @@ Page({
   onKeywordInput(e) {
     const keyword = e.detail.value || '';
     this.setData({ keyword });
-    this.applyFilters(this.data.documents, keyword);
+    this.loadDocuments();
   },
 
   clearKeyword() {
     this.setData({ keyword: '' });
-    this.applyFilters(this.data.documents, '');
+    this.loadDocuments();
   },
 
-  applyFilters(documents, keyword) {
-    const normalized = (keyword || '').trim().toLowerCase();
-    const filteredDocuments = !normalized
-      ? documents
-      : documents.filter((item) => {
-          const haystack = `${item.title} ${item.domain} ${item.summary || ''}`.toLowerCase();
-          return haystack.includes(normalized);
-        });
-    this.setData({ filteredDocuments });
+  onUploadTitleInput(e) {
+    this.setData({ uploadTitle: e.detail.value || '' });
+  },
+
+  onUploadDomainInput(e) {
+    this.setData({ uploadDomain: e.detail.value || 'general' });
+  },
+
+  onUploadTagsInput(e) {
+    this.setData({ uploadTags: e.detail.value || '' });
   },
 
   formatFileSize(size) {

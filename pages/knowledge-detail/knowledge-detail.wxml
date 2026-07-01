@@ -2,7 +2,9 @@
   <view class="card" wx:if="{{document}}">
     <view class="title">{{document.title}}</view>
     <view class="muted">Domain: {{document.domain}}</view>
-    <view style="margin-top: 24rpx;">{{document.summary || 'No summary yet.'}}</view>
+    <view class="muted" style="margin-top: 12rpx;">Status: {{document.status}} · Chunks: {{document.chunk_count}} · Size: {{document.size}} bytes</view>
+    <view class="muted">Published: {{document.is_published ? 'Yes' : 'No'}}</view>
+    <view style="margin-top: 24rpx; white-space: pre-wrap;">{{document.summary || 'No summary yet.'}}</view>
     <button bindtap="askFromDocument" style="margin-top: 24rpx;">Ask with this document</button>
   </view>
   <view class="card" wx:elif="{{error}}">

@@ -1,0 +1,17 @@
+<view class="page">
+  <view class="card">
+    <view class="header-row">
+      <view class="title title-no-margin">Chat Sessions</view>
+      <button bindtap="createNewSession" loading="{{loading}}">New Session</button>
+    </view>
+    <view class="muted" style="margin-bottom: 12rpx;">Tap any session to continue the conversation in Chat.</view>
+    <view wx:if="{{error}}" style="color:#b91c1c; margin-bottom: 16rpx;">{{error}}</view>
+    <block wx:for="{{sessions}}" wx:key="id">
+      <view class="doc-item" data-id="{{item.id}}" bindtap="openSession">
+        <view class="doc-title">{{item.title}}</view>
+        <view class="muted">Messages: {{item.message_count}} · Updated: {{item.last_msg_at}}</view>
+      </view>
+    </block>
+    <view wx:if="{{!sessions.length}}" class="muted">No sessions yet.</view>
+  </view>
+</view>

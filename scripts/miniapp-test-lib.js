@@ -88,6 +88,14 @@ function createWxRuntime({ storage, loginCode = 'codex-miniapp-simulated-login',
     navigateTo({ url }) {
       storage.set('__lastNavigateTo', url);
     },
+    switchTab({ url, success, fail }) {
+      try {
+        storage.set('__lastSwitchTab', url);
+        success && success();
+      } catch (error) {
+        fail && fail(error);
+      }
+    },
   };
 }
 
@@ -130,6 +138,7 @@ function installServiceRuntime({ apiBaseUrl, loginCode, verbose = false }) {
     globalData: {
       token: '',
       user: null,
+      pendingChatEntry: null,
     },
   };
 

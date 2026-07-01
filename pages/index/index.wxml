@@ -1,9 +1,14 @@
 <view class="page">
   <view class="card">
     <view class="title">ReActAgent MiniApp</view>
-    <view class="muted">Frontend scaffold wired to the backend contract.</view>
+    <view class="muted">A lightweight AI knowledge assistant for document search, knowledge Q&amp;A, and ongoing conversations.</view>
     <button wx:if="{{!user}}" bindtap="handleLogin" style="margin-top: 24rpx;">WeChat Login</button>
     <view wx:else style="margin-top: 24rpx;">Signed in as {{user.nickname || ('User #' + user.id)}}</view>
+    <view wx:if="{{user}}" class="action-row">
+      <button bindtap="startNewChat">Start New Chat</button>
+      <button bindtap="browseDocuments">Browse Documents</button>
+    </view>
+    <button wx:if="{{user && sessions.length}}" bindtap="continueLatestSession" class="ghost-action">Continue Latest Session</button>
     <view wx:if="{{error}}" style="color:#b91c1c; margin-top: 16rpx;">{{error}}</view>
   </view>
 
@@ -15,5 +20,43 @@
       </view>
     </block>
     <view wx:if="{{!suggestions.length}}" class="muted">No suggestions loaded.</view>
+  </view>
+
+  <view class="card" style="margin-top: 24rpx;">
+    <view class="title">Quick Search</view>
+    <input placeholder="Search documents" bindinput="onSearchInput" value="{{searchQuery}}" />
+    <block wx:for="{{searchResults}}" wx:key="document_id">
+      <view class="doc-item" data-id="{{item.document_id}}" bindtap="openDocument">
+        <view class="doc-title">{{item.title}}</view>
+        <view class="muted">{{item.snippet}}</view>
+        <button size="mini" class="inline-action" data-id="{{item.document_id}}" catchtap="askDocument">Ask This Doc</button>
+      </view>
+    </block>
+    <view wx:if="{{searchQuery && !searchResults.length}}" class="muted">No results yet.</view>
+  </view>
+
+  <view class="card" style="margin-top: 24rpx;">
+    <view class="title">Recent Chats</view>
+    <button bindtap="openSessionsPage" style="margin-bottom: 16rpx;">Open Session Manager</button>
+    <block wx:for="{{sessions}}" wx:key="id">
+      <view class="doc-item" data-id="{{item.id}}" bindtap="openSession">
+        <view class="doc-title">{{item.title}}</view>
+        <view class="muted">Messages: {{item.message_count}} · Updated: {{item.last_msg_at}}</view>
+      </view>
+    </block>
+    <view wx:if="{{!sessions.length}}" class="muted">No chat sessions yet.</view>
+  </view>
+
+  <view class="card" style="margin-top: 24rpx;">
+    <view class="title">Recent Documents</view>
+    <block wx:for="{{recentDocuments}}" wx:key="id">
+      <view class="doc-item" data-id="{{item.id}}" bindtap="openDocument">
+        <view class="doc-title">{{item.title}}</view>
+        <view class="muted">{{item.domain}} · {{item.status}}</view>
+        <view class="muted">{{item.summary || 'No summary yet.'}}</view>
+        <button size="mini" class="inline-action" data-id="{{item.id}}" catchtap="askDocument">Ask This Doc</button>
+      </view>
+    </block>
+    <view wx:if="{{!recentDocuments.length}}" class="muted">No recent documents yet.</view>
   </view>
 </view>

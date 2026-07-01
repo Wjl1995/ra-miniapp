@@ -11,6 +11,23 @@ const searchDocuments = (q = '', topK = 5, domain = '') => {
   });
 };
 
+const listDocumentsByQuery = ({ keyword = '', domain = '', published = '' } = {}) => {
+  const params = [];
+  if (keyword) {
+    params.push(`keyword=${encodeURIComponent(keyword)}`);
+  }
+  if (domain) {
+    params.push(`domain=${encodeURIComponent(domain)}`);
+  }
+  if (published !== '') {
+    params.push(`published=${encodeURIComponent(published)}`);
+  }
+  return request({
+    url: `/api/v1/documents${params.length ? `?${params.join('&')}` : ''}`,
+    method: 'GET',
+  });
+};
+
 const listSuggestions = () => request({
   url: '/api/v1/suggestions',
   method: 'GET',
@@ -18,5 +35,6 @@ const listSuggestions = () => request({
 
 module.exports = {
   searchDocuments,
+  listDocumentsByQuery,
   listSuggestions,
 };

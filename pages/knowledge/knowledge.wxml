@@ -15,6 +15,11 @@
       />
       <view wx:if="{{keyword}}" class="clear-text" bindtap="clearKeyword">Clear</view>
     </view>
+    <view style="margin-bottom: 20rpx;">
+      <input class="search-input" placeholder="Upload title" value="{{uploadTitle}}" bindinput="onUploadTitleInput" />
+      <input class="search-input" placeholder="Upload domain" value="{{uploadDomain}}" bindinput="onUploadDomainInput" style="margin-top: 12rpx;" />
+      <input class="search-input" placeholder="Upload tags, comma separated" value="{{uploadTags}}" bindinput="onUploadTagsInput" style="margin-top: 12rpx;" />
+    </view>
     <view wx:if="{{uploadHint}}" class="hint">{{uploadHint}}</view>
     <view wx:if="{{error}}" style="color:#b91c1c; margin-bottom: 16rpx;">{{error}}</view>
     <block wx:for="{{filteredDocuments}}" wx:key="id">

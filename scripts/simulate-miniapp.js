@@ -25,10 +25,11 @@ async function main() {
   await detailPage.onLoad({ id: firstDocument && firstDocument.id });
 
   const chatPage = loadPage(runtime.pages, 'pages/chat/chat.js');
-  await chatPage.onLoad({
+  chatPage.onLoad({
     question: encodeURIComponent(process.env.MINIAPP_TEST_QUESTION || 'What is the support email?'),
     documentId: String(firstDocument && firstDocument.id),
   });
+  await chatPage.onShow();
 
   const mePage = loadPage(runtime.pages, 'pages/me/me.js');
   await mePage.onShow();

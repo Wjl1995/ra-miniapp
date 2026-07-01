@@ -2,6 +2,7 @@ App({
   globalData: {
     token: '',
     user: null,
+    pendingChatEntry: null,
   },
 
   onLaunch() {

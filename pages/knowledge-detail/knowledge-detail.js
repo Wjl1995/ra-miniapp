@@ -1,4 +1,5 @@
 const { getDocument } = require('../../services/document');
+const { openChat } = require('../../utils/chat-entry');
 
 Page({
   data: {
@@ -19,10 +20,11 @@ Page({
     }
   },
 
-  askFromDocument() {
+  async askFromDocument() {
     const documentId = this.data.document ? this.data.document.id : '';
-    wx.navigateTo({
-      url: `/pages/chat/chat?documentId=${documentId}`,
+    await openChat({
+      forceNewSession: true,
+      documentId,
     });
   },
 });

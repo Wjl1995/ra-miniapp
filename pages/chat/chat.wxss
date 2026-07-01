@@ -1,1 +1,22 @@
-/* Uses global styles */
+.header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24rpx;
+  margin-bottom: 16rpx;
+}
+
+.title-no-margin {
+  margin-bottom: 0;
+}
+
+.ref-card {
+  padding: 12rpx 0;
+  border-top: 1rpx solid #e5e7eb;
+}
+
+.ref-link {
+  margin-top: 8rpx;
+  color: #2563eb;
+  font-size: 24rpx;
+}

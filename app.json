@@ -2,6 +2,7 @@
   "pages": [
     "pages/index/index",
     "pages/chat/chat",
+    "pages/chat-sessions/sessions",
     "pages/knowledge/knowledge",
     "pages/knowledge-detail/knowledge-detail",
     "pages/me/me"
@@ -17,6 +18,10 @@
       {
         "pagePath": "pages/index/index",
         "text": "Home"
+      },
+      {
+        "pagePath": "pages/chat/chat",
+        "text": "Chat"
       },
       {
         "pagePath": "pages/knowledge/knowledge",

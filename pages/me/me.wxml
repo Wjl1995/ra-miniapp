@@ -2,9 +2,27 @@
   <view class="card">
     <view class="title">Profile</view>
     <view wx:if="{{user}}">
-      <view>ID: {{user.id}}</view>
-      <view>Nickname: {{user.nickname || '-'}}</view>
-      <view>Quota: {{user.quota.used}} / {{user.quota.total}}</view>
+      <view wx:if="{{!editing}}">
+        <view>ID: {{user.id}}</view>
+        <view>Nickname: {{user.nickname || '-'}}</view>
+        <view wx:if="{{user.avatar}}">Avatar: {{user.avatar}}</view>
+        <view>Quota: {{user.quota.used}} / {{user.quota.total}}</view>
+        <button bindtap="startEditing" style="margin-top: 24rpx;">Edit Profile</button>
+      </view>
+      <view wx:else>
+        <view style="margin-bottom: 16rpx;">
+          <view class="muted" style="margin-bottom: 8rpx;">Nickname</view>
+          <input value="{{nicknameDraft}}" bindinput="onNicknameInput" placeholder="Enter nickname" />
+        </view>
+        <view style="margin-bottom: 16rpx;">
+          <view class="muted" style="margin-bottom: 8rpx;">Avatar URL</view>
+          <input value="{{avatarDraft}}" bindinput="onAvatarInput" placeholder="Enter avatar url" />
+        </view>
+        <view style="display:flex; gap:16rpx;">
+          <button bindtap="saveProfile" loading="{{saving}}" style="flex:1;">Save</button>
+          <button bindtap="cancelEditing" style="flex:1;">Cancel</button>
+        </view>
+      </view>
     </view>
     <view wx:elif="{{error}}" style="color:#b91c1c;">{{error}}</view>
     <view wx:else class="muted">Not signed in.</view>

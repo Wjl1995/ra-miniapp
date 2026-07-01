@@ -1,10 +1,22 @@
 const { request } = require('../utils/request');
 const { API_BASE_URL } = require('../config/env');
 
-const listDocuments = (domain = '') => request({
-  url: `/api/v1/documents${domain ? `?domain=${encodeURIComponent(domain)}` : ''}`,
-  method: 'GET',
-});
+const listDocuments = ({ domain = '', keyword = '', published = '' } = {}) => {
+  const params = [];
+  if (domain) {
+    params.push(`domain=${encodeURIComponent(domain)}`);
+  }
+  if (keyword) {
+    params.push(`keyword=${encodeURIComponent(keyword)}`);
+  }
+  if (published !== '') {
+    params.push(`published=${encodeURIComponent(published)}`);
+  }
+  return request({
+    url: `/api/v1/documents${params.length ? `?${params.join('&')}` : ''}`,
+    method: 'GET',
+  });
+};
 
 const getDocument = (documentId) => request({
   url: `/api/v1/documents/${documentId}`,
